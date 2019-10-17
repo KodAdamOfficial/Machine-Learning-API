@@ -6,7 +6,7 @@ This projet creating for calulate the customer amount of credit.
 
 
 
-Post example:
+JSON Post example:
 
 {
     "exp": 1.4
