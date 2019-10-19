@@ -35,17 +35,17 @@ def predict():
            text1 = float(text)
            prediction = model.predict([[text1]])
            print(prediction)
-           salary = int(prediction[0][1])
-           return jsonify({'Salary': salary })    
+           salary = str(int(prediction[0][1]))
+           return jsonify({"error":None,"data":{"Salary": salary}})    
        else:
-           return jsonify({'Error': 'Invalid value. Please just post number value'})
+           return jsonify({'error': 'Invalid value. Please just post number value',"data":None})
     
    else:
-       return jsonify({'Error': 'No value. Please just post number value'})
+       return jsonify({'error': 'No value. Please just post number value',"data":None})
 
 if __name__ == '__main__':
     try:
-        app.run(debug=False, port=3000)
+        app.run(debug=False, port=8080)
         print("Server is opened")
     except:
         print("Server is exited unexpectedy. Please contat server admin.")
