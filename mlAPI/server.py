@@ -19,20 +19,29 @@ class predictionDefault:
 
 app = Flask(__name__)
 model = pickle.load(open('model.pkl','rb'))
+@app.route('/')
+def index():
+    return '<h1>Sektör45 Bank Otomation</h1>'
 
-@app.route('/api',methods=['POST'])
+
+@app.route('/credit',methods=['POST'])
 def predict():
-   if(request.data):
+   if(request.data != None):
        jdata = request.get_json()
-       if jdata['exp']:
+       exp = jdata['exp']
+       cntrl = isinstance(exp, str)
+       if cntrl == False:
            text = jdata['exp']
            text1 = float(text)
            prediction = model.predict([[text1]])
            print(prediction)
-           p = int(prediction[0][1])
-           return jsonify({'answer': p })    
+           salary = int(prediction[0][1])
+           return jsonify({'Salary': salary })    
+       else:
+           return jsonify({'Error': 'Invalid value. Please just post number value'})
     
-    
+   else:
+       return jsonify({'Error': 'No value. Please just post number value'})
 
 if __name__ == '__main__':
     try:
