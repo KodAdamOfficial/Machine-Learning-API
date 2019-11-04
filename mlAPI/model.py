@@ -14,10 +14,10 @@ import json
 
 #Import dataset
 
-dataset = pd.read_csv('Salary_Data.csv')
+dataset = pd.read_csv('dataset.csv')
 x = dataset.iloc[:,:-1].values
 y = dataset.iloc[:,].values
-
+print(x)
 #Split the dataset Training and Testing
 
 from sklearn.model_selection import train_test_split
@@ -35,11 +35,10 @@ y_pred = regressor.predict(x_test)
 
 #Saving model
 
-pickle.dump(regressor, open('model.pkl','wb'))
+pickle.dump(regressor, open('modelCredit.pkl','wb'))
 
-#Loading model to compare the results
-
-model = pickle.load(open('model.pkl','rb'))
-pro = model.predict([[4.2]])
-
-print(pro)
+state = regressor.predict([[5000000,450,1,2,1]])
+if(round(state[0][5])>=1):
+    print("Kredi Ver")
+else:
+    print("Kredi Yok Sana")    

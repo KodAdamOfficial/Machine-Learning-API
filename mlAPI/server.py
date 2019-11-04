@@ -18,7 +18,7 @@ class predictionDefault:
         return {'sonuç': self.result}
 
 app = Flask(__name__)
-model = pickle.load(open('model.pkl','rb'))
+model = pickle.load(open('modelCredit.pkl','rb'))
 @app.route('/')
 def index():
     return '<h1>Sektör45 Bank Otomation</h1>'
@@ -28,15 +28,27 @@ def index():
 def predict():
    if(request.data != None):
        jdata = request.get_json()
-       exp = jdata['exp']
-       cntrl = isinstance(exp, str)
-       if cntrl == False:
-           text = jdata['exp']
-           text1 = float(text)
-           prediction = model.predict([[text1]])
-           print(prediction)
-           salary = str(int(prediction[0][1]))
-           return jsonify({"error":None,"data":{"Salary": salary}})    
+       credit = jdata['credit']
+       age = jdata['age']
+       homeState = jdata['home']
+       creditC = jdata['creditCount']
+       phoneState = jdata['phoneState']
+       ctrl1 = isinstance(credit,str)
+       ctrl2 = isinstance(age,str)
+       ctrl3 = isinstance(homeState,str)
+       ctrl4 = isinstance(creditC,str)
+       ctrl5 = isinstance(phoneState,str)
+       if( ctrl1 == False & ctrl2 == False & ctrl3 == False & ctrl4 == False & ctrl5 == False):
+          
+           prediction = model.predict([[int(credit),int(age),int(homeState),int(creditC),int(phoneState)]])
+           
+           salary = prediction[0][5]
+           state = "Kredi Verme"
+           if(round(salary)>=1):
+               state = "Kredi Ver"
+          
+           
+           return jsonify({"error":None,"data":{"CrediState": state}})    
        else:
            return jsonify({'error': 'Invalid value. Please just post number value',"data":None})
     
