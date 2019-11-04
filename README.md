@@ -9,7 +9,11 @@ This projet creating for calulate the customer amount of credit.
 JSON Post example:
 
 {
-    "exp": 1.4
+	"credit": 50000,
+	"age": 90,
+	"home": 1,
+	"creditCount": 200,
+	"phoneState": 1
 }
 
-You acn change value.
+You can change value.
